@@ -13,6 +13,6 @@ server.set('view engine','ejs')
 server.use(express.urlencoded({extended: false}))
 server.use(router)
 server.use(express.static(path.join(__dirname,'file')))
-server.listen(8434,'localhost',()=>{
+server.listen(8014,'localhost',()=>{
     console.log('You are in');
 })

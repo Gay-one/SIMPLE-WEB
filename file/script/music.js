@@ -1,26 +1,16 @@
-const music_list = [
-    {
-        name:"Cheri Cheri Lady",
-        band:"Modern Talking",
-        release:"1985-09-02"
-    },
-    {
-        name:"House of Memories",
-        band:"Panic! At the Disco",
-        release:"2016-01-15"
-    },
-    {
-        name:"We shall fight on the beaches",
-        band:"Winston Churchill",
-        release:"1940-06-18"
-    },
-    {
-        name:"Beggin",
-        band:"Maneskin",
-        release:"2021-09-27"
+let OFUCK = Kuy.replace(/&#34;/g, String.fromCharCode(34))
+let music_list = JSON.parse(OFUCK)
+
+function shuffleArray(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]]
     }
-    
-]
+    return arr
+}
+
+shuffleArray(music_list)
+
 let index = Math.floor(Math.random() * music_list.length)
 const song = document.createElement('audio')
 const source = document.createElement('source')
@@ -58,7 +48,7 @@ Sband.textContent = `${music_list[index].band}`
 Srelease.textContent = `${music_list[index].release}`
 Simg.src = `song/${music_list[index].name}.jpg`
 
-song.addEventListener('ended', ()=>{
+song.addEventListener('ended', () => {
     index++
     if (index >= music_list.length) {
         index = 0
@@ -70,10 +60,10 @@ song.addEventListener('ended', ()=>{
     Simg.src = `song/${music_list[index].name}.jpg`
     song.load()
 })
-skipBack.addEventListener('click', ()=>{
+skipBack.addEventListener('click', () => {
     index--
     if (index < 0) {
-        index = music_list.length-1
+        index = music_list.length - 1
     }
     source.src = `song/${music_list[index].name}.mp3`
     Sname.textContent = `${music_list[index].name}`
@@ -82,7 +72,7 @@ skipBack.addEventListener('click', ()=>{
     Simg.src = `song/${music_list[index].name}.jpg`
     song.load()
 })
-skipForward.addEventListener('click', ()=>{
+skipForward.addEventListener('click', () => {
     index++
     if (index >= music_list.length) {
         index = 0
@@ -94,7 +84,7 @@ skipForward.addEventListener('click', ()=>{
     Simg.src = `song/${music_list[index].name}.jpg`
     song.load()
 })
-Home.addEventListener('click', ()=>{
+Home.addEventListener('click', () => {
     document.getElementById('Target').remove()
     let div = document.createElement('div')
     let H1 = document.createElement('h1')
@@ -118,7 +108,7 @@ Home.addEventListener('click', ()=>{
     divin.appendChild(P3)
     divin.appendChild(P4)
 })
-Add_Music.addEventListener('click', ()=>{
+Add_Music.addEventListener('click', () => {
     document.getElementById('Target').remove()
     let div = document.createElement('div')
     let form = document.createElement('form')
@@ -206,7 +196,7 @@ Add_Music.addEventListener('click', ()=>{
     div_yack5.appendChild(input_fileimg)
     div_yack6.appendChild(input_submit)
 })
-Search_Music.addEventListener('click', ()=>{
+Search_Music.addEventListener('click', () => {
     document.getElementById('Target').remove()
     let div = document.createElement('div')
     let div_box = document.createElement('div')
@@ -232,27 +222,37 @@ Search_Music.addEventListener('click', ()=>{
     form.appendChild(label_text)
     form.appendChild(input_text)
     input_text.addEventListener('keydown', () => {
+
+        function getindex(getimport, thing) {
+            for (let i = 0; i < getimport.length; i++) {
+                if (getimport[i] === thing) {
+                    return i
+                }
+            }
+        }
+
         const searchTerm = input_text.value.toLowerCase();
-    
+
         div_result.innerHTML = '';
-    
+
         const filteredData = music_list.filter((item) => {
             const titleLower = item.name.toLowerCase();
             return titleLower.includes(searchTerm)
         });
-    
+
         if (filteredData.length > 0) {
             div_result.innerHTML = '<h2>Search Results</h2>';
             for (const item of filteredData) {
                 div_result.innerHTML += `<div class="card" id="card-${item.name}"><div>${item.name}</div></div>`
             }
             for (const item of filteredData) {
-                document.getElementById(`card-${item.name}`).addEventListener('click', ()=>{
+                document.getElementById(`card-${item.name}`).addEventListener('click', () => {
                     source.src = `song/${item.name}.mp3`
                     Simg.src = `song/${item.name}.jpg`
                     Sname.textContent = `${item.name}`
                     Sband.textContent = `${item.band}`
                     Srelease.textContent = `${item.release}`
+                    index = getindex(music_list, item)
                     song.load()
                 })
             }
@@ -260,13 +260,13 @@ Search_Music.addEventListener('click', ()=>{
             div_result.innerHTML = '<p>No results found.</p>';
         }
     })
-    input_text.addEventListener('keydown', (e)=>{
-        if (e.code=="Enter"){
+    input_text.addEventListener('keydown', (e) => {
+        if (e.code == "Enter") {
             e.preventDefault()
         }
     })
 })
-Me.addEventListener('click', ()=>{
+Me.addEventListener('click', () => {
     document.getElementById('Target').remove()
     let div = document.createElement('div')
     let h1 = document.createElement('h1')
@@ -286,7 +286,7 @@ Me.addEventListener('click', ()=>{
     div.appendChild(h1)
     div.appendChild(p1)
 })
-song.addEventListener('pause', ()=>{
+song.addEventListener('pause', () => {
     st_1.style.animationDelay = '0s'
     st_2.style.animationDelay = '0s'
     st_3.style.animationDelay = '0s'
@@ -302,7 +302,7 @@ song.addEventListener('pause', ()=>{
     st_6.style.animationIterationCount = '1'
     st_7.style.animationIterationCount = '1'
 })
-song.addEventListener('playing', ()=>{
+song.addEventListener('playing', () => {
     st_1.style.animationDelay = '0s'
     st_2.style.animationDelay = '0.3s'
     st_3.style.animationDelay = '0.6s'
@@ -318,4 +318,3 @@ song.addEventListener('playing', ()=>{
     st_6.style.animationIterationCount = 'infinite'
     st_7.style.animationIterationCount = 'infinite'
 })
-
